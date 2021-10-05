@@ -1,21 +1,35 @@
 import sys
 
-# 1. Import `QApplication` and all the required widgets
 from PyQt5.QtWidgets import QApplication
-from PyQt5.QtWidgets import QLabel
-from PyQt5.QtWidgets import QWidget
+from PyQt5.QtWidgets import QDialog
+from PyQt5.QtWidgets import QDialogButtonBox
+from PyQt5.QtWidgets import QFormLayout
+from PyQt5.QtWidgets import QLineEdit
+from PyQt5.QtWidgets import QVBoxLayout
 
-app = QApplication(sys.argv)
 
-window = QWidget()
-window.setWindowTitle('PyQt5 App')
-window.setGeometry(100, 100, 280, 80)
-window.move(60, 15)
-helloMsg = QLabel('<h1>Hello World!</h1>', parent=window)
-helloMsg.move(60, 15)
+class Dialog(QDialog):
+    """Dialog."""
+    def __init__(self, parent=None):
+        """Initializer."""
+        super().__init__(parent)
+        self.setWindowTitle('QDialog')
+        dlgLayout = QVBoxLayout()
+        formLayout = QFormLayout()
+        formLayout.addRow('Name:', QLineEdit())
+        formLayout.addRow('Age:', QLineEdit())
+        formLayout.addRow('Job:', QLineEdit())
+        formLayout.addRow('Hobbies:', QLineEdit())
+        dlgLayout.addLayout(formLayout)
+        btns = QDialogButtonBox()
+        btns.setStandardButtons(
+            QDialogButtonBox.Cancel | QDialogButtonBox.Ok)
+        dlgLayout.addWidget(btns)
+        self.setLayout(dlgLayout)
 
-# 4. Show your application's GUI
-window.show()
 
-# 5. Run your application's event loop (or main loop)
-sys.exit(app.exec_())
+if __name__ == '__main__':
+    app = QApplication(sys.argv)
+    dlg = Dialog()
+    dlg.show()
+    sys.exit(app.exec_())
