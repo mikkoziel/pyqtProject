@@ -11,6 +11,8 @@ from PyQt5.QtWidgets import QPushButton
 from PyQt5.QtWidgets import QVBoxLayout
 from functools import partial
 
+ERROR_MSG = 'ERROR'
+
 
 class PyCalcUi(QMainWindow):
     """PyCalc's View (GUI)."""
@@ -108,6 +110,16 @@ class PyCalcCtrl:
                 btn.clicked.connect(partial(self._buildExpression, btnText))
 
         self._view.buttons['C'].clicked.connect(self._view.clearDisplay)
+
+def evaluateExpression(expression):
+    """Evaluate an expression."""
+    try:
+        result = str(eval(expression, {}, {}))
+    except Exception:
+        result = ERROR_MSG
+
+    return result
+
 
 # Client code
 def main():
